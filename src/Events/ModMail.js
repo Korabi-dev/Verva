@@ -23,9 +23,9 @@ module.exports = {
     command = client.commands.find((cmd) => cmd.aliases?.includes(commandName));
     }
     if(command) return;
+    var datetime = new Date().toString()
     if(message.channel.type == "DM"){
         const data = await client.functions.thread_get({user: message.author.id})
-        var datetime = new Date().toString()
             const guild = await client.guild()
         if(data){
             const channel = guild.channels.cache.get(data.channel)
