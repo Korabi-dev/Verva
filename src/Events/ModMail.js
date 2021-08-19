@@ -39,6 +39,7 @@ module.exports = {
             }
         }else {
             const newd = await client.functions.thread_create(client, {user: message.author.id, tag: message.author.username, _tag: message.author.tag})
+                    newd.participants.push(message.author)
                     await newd.save()
                 const channel = guild.channels.cache.get(newd.channel)
                 channel.send({embeds: [client.functions.embed(`${message.author.username}:`, `${message.content}`)]})
@@ -58,6 +59,10 @@ module.exports = {
             })
             if(sent == false) return message.reply({embeds: [client.functions.success("Dm failed to send, I strongly advise closing this thread.")]})
             data.messages.push(`${message.author.username} | ${datetime}: ${message.content}`)
+            if(!data.participants.includes(message.author)){
+                data.participants.push(message.author)
+            }
+            await data.save()
             }
     }
     }
