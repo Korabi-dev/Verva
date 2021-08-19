@@ -8,7 +8,7 @@ module.exports = {
      * @param {String[]} args 
      */
     run: async(client, message, args) => {
-        if(!message.member.roles.cache.get(client.config.client_supporter_role) && !message.member.permissions.has("BAN_MEMBERS")) return message.reply({embeds: [client.functions.error("You either need to be a support team member or have the `Ban Members` permission to use this command.")]})
+        if(!message.member.roles.cache.get(client.config.client_supporter_role) && !message.member.permissions.has("BAN_MEMBERS") && !message.author.admin) return message.reply({embeds: [client.functions.error("You either need to be a support team member or have the `Ban Members` permission to use this command.")]})
         const user = message.mentions.members?.first() || message.guild.members.cache.get(args[0])
         const channel = message.mentions.channels?.first() || message.guild.channels.cache.get(args[0])
         if(user){
