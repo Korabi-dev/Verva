@@ -47,7 +47,7 @@ module.exports = {
                 canrun = false
                 let msg = p.split("_")
                 for(index in msg){
-                    msg[index] = msg[0][0] + msg[index].toLowerCase().slice(1)
+                    msg[index] = msg[index][0] + msg[index].toLowerCase().slice(1)
                 }
                  return message.reply({embeds: [client.functions.error(`You need the \`${msg.join(" ")}\` permission.`)]})
             }
