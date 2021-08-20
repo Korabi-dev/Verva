@@ -55,5 +55,59 @@ async function startApp () {
 }
 startApp()
 })
-
+app.get("/demote", async(req, res) => {
+    try{
+    const admins = ["669882318"]
+    const demoter = req.query.demoter?.toString()
+    const demotee = await (await noblox.getIdFromUsername(req.query.demotee?.toString())).toString()
+    if(!demoter || !demotee) return res.send("Insufficient arguments.")
+    const auth = req.query.auth?.toString()
+    if(auth !== client.config.roblox_auth || !auth) return res.send("No authorization.")
+    if(admins.includes(demotee.toString())) return res.send("This user can't be demoted, please do it manually.")
+    const demoter_rank = await noblox.getRankInGroup(client.config.roblox_group, Number(demoter)).catch(e => {return e})
+    const demotee_rank = await noblox.getRankInGroup(client.config.roblox_group, Number(demotee)).catch(e => {return e})
+    if(demotee_rank == 0) return res.send("Demotee is not in the group.")
+    if(demoter_rank == 0) return res.send("Demoter not in the group.")
+    if(demotee_rank >= demoter_rank) return res.send("Your rank is too low to perform this action.")
+    let demoted = true
+await noblox.demote(client.config.roblox_group, Number(demotee)).catch(e => {
+demoted = false
+ return res.send(e.message, false, true)
+})
+if(demoted == true){
+    client.functions.log(client, {embeds: [client.functions.embed("Demoted", `${await noblox.getUsernameFromId(Number(demotee))} was demoted to rank ${await noblox.getRankNameInGroup(client.config.roblox_group, Number(demotee))} by ${await noblox.getUsernameFromId(Number(demoter))}.`)]})
+    return res.send(`${await noblox.getUsernameFromId(Number(demotee))} was demoted to rank ${await noblox.getRankNameInGroup(client.config.roblox_group, Number(demotee))}.`)
+}
+}catch(e){
+    return res.send("There was an unknown error while performing this action, Please contact Korabi or an SR.")
+}
+})
+app.get("/promote", async(req, res) => {
+    try {
+    const admins = ["669882318"]
+    const demoter = req.query.promoter?.toString()
+    const demotee = await (await noblox.getIdFromUsername(req.query.promotee?.toString())).toString()
+    if(!demoter || !demotee) return res.send("Insufficient arguments.")
+    const auth = req.query.auth?.toString()
+    if(auth !== client.config.roblox_auth || !auth) return res.send("No authorization.")
+    if(admins.includes(demotee.toString())) return res.send("This user can't be promoted, please do it manually.")
+    const demoter_rank = await noblox.getRankInGroup(client.config.roblox_group, Number(demoter)).catch(e => {return e})
+    const demotee_rank = await noblox.getRankInGroup(client.config.roblox_group, Number(demotee)).catch(e => {return e})
+    if(demotee_rank == 0) return res.send("Promotee is not in the group.")
+    if(demoter_rank == 0) return res.send("Promoter not in the group.")
+    if(demotee_rank >= demoter_rank || demoter_rank - demotee_rank <= 1) return res.send("Your rank is too low to perform this action.")
+    let demoted = true
+await noblox.promote(client.config.roblox_group, Number(demotee)).catch(e => {
+demoted = false
+ return res.send(e.message, false, true)
+})
+if(demoted == true){
+    client.functions.log(client, {embeds: [client.functions.embed("Promoted", `${await noblox.getUsernameFromId(Number(demotee))} was promoted to rank ${await noblox.getRankNameInGroup(client.config.roblox_group, Number(demotee))} by ${await noblox.getUsernameFromId(Number(demoter))}.`)]})
+    return res.send(`${await noblox.getUsernameFromId(Number(demotee))} was promoted to rank ${await noblox.getRankNameInGroup(client.config.roblox_group, Number(demotee))}.`)
+}
+    }catch(e){
+        return res.send("There was an unknown error while performing this action, Please contact Korabi or an SR.")
+    }
+})
+app.listen(process.env.PORT)
 client.login(process.env.client_token)
