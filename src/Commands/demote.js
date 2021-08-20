@@ -1,9 +1,9 @@
-const discord = require("discord.js")
-const noblox = require("noblox.js")
+const discord = require("discord.js");
+const noblox = require("noblox.js");
 module.exports = {
     name: "demote",
     roles: ["878257030836674570"],
-    admin: true,
+    admin: true, 
     /**
      * 
      * @param {discord.Client} client 
