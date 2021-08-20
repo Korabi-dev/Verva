@@ -12,6 +12,8 @@
   "dependencies": {
     "discord.js": "^13.1.0",
     "dotenv": "^10.0.0",
-    "mongoose": "^5.13.7"
+    "express": "^4.17.1",
+    "mongoose": "^5.13.7",
+    "noblox.js": "^4.9.0"
   }
 }

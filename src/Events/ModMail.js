@@ -10,6 +10,7 @@ module.exports = {
     run: async(message, client) => {
     if(message.channel.partial) message.channel.fetch();
     if(message.author.bot) return;
+    if(client.user.id == "750717487196405811") return;
     const prefix = client.config.client_prefix
     let [commandName, ...args] = message.content
     .slice(prefix.length)

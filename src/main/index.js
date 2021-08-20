@@ -1,10 +1,10 @@
 // Definitions \\
 
 const discord = require("discord.js");
-const intents = discord.Intents.FLAGS
 require("dotenv").config()
-const client = new discord.Client({ intents: 32767, partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER'] });
+const client = new discord.Client({ intents: 32767, partials: ['CHANNEL'] });// ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER']
 const mongoose = require("mongoose")
+const app = require("express")()
 client.functions = require("./functions")
 client.commands = new discord.Collection()
 client.events = new discord.Collection()
@@ -13,6 +13,7 @@ client.models = mongoose.models
 client.guild = async function(){return await client.guilds.cache.get(client.config.client_main_guild)}
 const fs = require("fs")
 const path = require("path")
+const noblox = require('noblox.js')
 
 // Critical events and functions\\
 
@@ -46,6 +47,13 @@ client.on("ready", () => {
         console.log(`Loaded Event ${event.name} successfully. #${events}`)
         ++events
     }
+    console.log(`${client.user.username} is online.`)
+    client.user.setActivity({type: "COMPETING", name: "being prettier than you 🥺"})
+async function startApp () {
+    const currentUser = await noblox.setCookie(process.env.roblox_cookie) 
+    console.log(`Logged in as ${currentUser.UserName} on roblox.`)
+}
+startApp()
 })
 
 client.login(process.env.client_token)

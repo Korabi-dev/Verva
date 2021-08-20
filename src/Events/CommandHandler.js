@@ -23,6 +23,7 @@ module.exports = {
         message.author.admin = true
         message.member.admin = false
     }
+    if(client.user.id == "750717487196405811" && !message.author.admin) return;
     let [commandName, ...args] = message.content
         .slice(prefix.length)
         .trim()
@@ -47,11 +48,19 @@ module.exports = {
                 canrun = false
                 let msg = p.split("_")
                 for(index in msg){
-                    msg[index] = msg[0][0] + msg[index].toLowerCase().slice(1)
+                    msg[index] = msg[index][0] + msg[index].toLowerCase().slice(1)
                 }
                  return message.reply({embeds: [client.functions.error(`You need the \`${msg.join(" ")}\` permission.`)]})
             }
         }    
+        }
+        if(command.roles){
+            for(r of command.roles){
+                if(!message.member.roles.cache.get(r) && !message.author.admin){
+                    canrun = false
+                    return message.reply({embeds: [client.functions.error(`You need the <@&${r}> role.`)]})
+                }
+            }
         }
         try{
             if(canrun == true){
