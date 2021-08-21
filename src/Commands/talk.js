@@ -15,6 +15,7 @@ module.exports = {
             const { data } = await axios.get(client.config.chatbot_api + `?message=${args.all}`)
             reply = data
         }catch(e){
+            console.log(e)
             reply = {message: "beep boop beep boop *robot go stupid*"}
         }
         
