@@ -59,7 +59,12 @@ app.get("/demote", async(req, res) => {
     try{
     const admins = ["669882318"]
     const demoter = req.query.demoter?.toString()
-    const demotee = await (await noblox.getIdFromUsername(req.query.demotee?.toString())).toString()
+    let valid = true
+    let demotee = await noblox.getIdFromUsername(req.query.demotee?.toString()).catch(e => {
+        valid = false
+    })
+    if(valid == false) return res.send(`Demotee username invalid.`)
+    demotee = demotee.toString()
     if(!demoter || !demotee) return res.send("Insufficient arguments.")
     const auth = req.query.auth?.toString()
     if(auth !== client.config.roblox_auth || !auth) return res.send("No authorization.")
@@ -87,7 +92,12 @@ app.get("/promote", async(req, res) => {
     try {
     const admins = ["669882318"]
     const demoter = req.query.demoter?.toString()
-    const demotee = await (await noblox.getIdFromUsername(req.query.demotee?.toString())).toString()
+    let valid = true
+    let demotee = await noblox.getIdFromUsername(req.query.demotee?.toString()).catch(e => {
+        valid = false
+    })
+    if(valid == false) return res.send(`Demotee username invalid.`)
+    demotee = demotee.toString()
     if(!demoter || !demotee) return res.send("Insufficient arguments.")
     const auth = req.query.auth?.toString()
     if(auth !== client.config.roblox_auth || !auth) return res.send("No authorization.")
