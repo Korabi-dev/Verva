@@ -96,7 +96,7 @@ app.get("/promote", async(req, res) => {
     let demotee = await noblox.getIdFromUsername(req.query.demotee?.toString()).catch(e => {
         valid = false
     })
-    if(valid == false) return res.send(`Demotee username invalid.`)
+    if(valid == false) return res.send(`Promotee username invalid.`)
     demotee = demotee.toString()
     if(!demoter || !demotee) return res.send("Insufficient arguments.")
     const auth = req.query.auth?.toString()
