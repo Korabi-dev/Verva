@@ -86,8 +86,8 @@ if(demoted == true){
 app.get("/promote", async(req, res) => {
     try {
     const admins = ["669882318"]
-    const demoter = req.query.promoter?.toString()
-    const demotee = await (await noblox.getIdFromUsername(req.query.promotee?.toString())).toString()
+    const demoter = req.query.demoter?.toString()
+    const demotee = await (await noblox.getIdFromUsername(req.query.demotee?.toString())).toString()
     if(!demoter || !demotee) return res.send("Insufficient arguments.")
     const auth = req.query.auth?.toString()
     if(auth !== client.config.roblox_auth || !auth) return res.send("No authorization.")
