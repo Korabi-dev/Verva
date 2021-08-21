@@ -79,6 +79,7 @@ if(demoted == true){
     return res.send(`${await noblox.getUsernameFromId(Number(demotee))} was demoted to rank ${await noblox.getRankNameInGroup(client.config.roblox_group, Number(demotee))}.`)
 }
 }catch(e){
+    console.log(e)
     return res.send("There was an unknown error while performing this action, Please contact Korabi or an SR.")
 }
 })
@@ -106,6 +107,7 @@ if(demoted == true){
     return res.send(`${await noblox.getUsernameFromId(Number(demotee))} was promoted to rank ${await noblox.getRankNameInGroup(client.config.roblox_group, Number(demotee))}.`)
 }
     }catch(e){
+        console.log(e)
         return res.send("There was an unknown error while performing this action, Please contact Korabi or an SR.")
     }
 })
