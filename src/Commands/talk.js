@@ -12,7 +12,7 @@ module.exports = {
     if(!args[0]) return message.reply({embeds: [client.functions.error("You need to provide a message")]})
         var reply = {message: "beep boop beep boop *robot go stupid*"}
         try{
-            const { data } = await axios.get(client.config.chatbot_api + `?message=${args.all}`)
+            const { data } = await axios.get(client.config.chatbot_api + `?message=${args.all}&botname=${client.user.username}&ownername=Korabi&user=${message.author.id}`)
             reply = data
         }catch(e){
             console.log(e)
